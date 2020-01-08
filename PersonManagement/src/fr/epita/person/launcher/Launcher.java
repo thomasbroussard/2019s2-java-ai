@@ -1,25 +1,41 @@
 package fr.epita.person.launcher;
 
+import java.util.List;
+
 import fr.epita.person.datamodel.Person;
+import fr.epita.person.service.PersonCSVDAO;
 
 public class Launcher {
 
 	
-	public static void main(String[] args) {
+	public static void main(String[] args) throws Exception{
+		
+		//1 - data initialization
 		Person person1 = new Person(180.0, 33, "someone@epita.fr");
 		
+		PersonCSVDAO dao = new PersonCSVDAO();
 		
-		//we want to format "person1" as follows
-		//180;33;someone@epita.fr
-		String formatted = String.valueOf(person1.getHeight()) + ";";
-		formatted += String.valueOf(person1.getAge()) + ";";
-		formatted += person1.getEmail();
+		dao.create(person1);
 		
-		System.out.println(formatted);
+		List<Person> persons = dao.readAll();
+		Person person2 = persons.get(persons.size()-1);
 		
-		//TODO read person2 fields from the formatted String
-		
-		Person person2 = new Person(height, age, email);
+		boolean isEmailEqual = person1.getEmail().equals(person2.getEmail());
+		boolean isAgeEqual = person1.getAge().equals(person2.getAge());
+		boolean isHeightEqual = person1.getHeight().equals(person2.getHeight());
+		if (isEmailEqual
+			&& isAgeEqual
+			&& isHeightEqual){
+			System.out.println("comparison success");
+			System.out.println("person1: " + person1);
+			System.out.println("person2: " + person2);
+			
+			
+		}else {
+			System.out.println("person1: " + person1);
+			System.out.println("person2: " + person2);
+			System.out.println("problem in comparison");
+		}
 		
 	}
 }
