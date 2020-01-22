@@ -13,17 +13,28 @@ public class TrafficEntry {
 	//Street(2)
 	private String street;
 	
+	//Indexed from Street
+	private String indexedStreet;
+	
 	
 	//Date of Count(3)
 	private Date dateOfCount;
+	
+	private Integer weekNumber;
+	
+	private Integer dayInWeek;
+	
+	
 	
 
 	// Total Passing Vehicle Volume(4)
 	private Integer totalPassingVehicleVolumes;
 	
 	// VehicleVolumeByEachDirectionOfTraffic(5)
-	private String vehicleVolumeByEachDirection;
+	private Integer vehicleVolumeForMainDirection;
 	
+	// VehicleVolumeByEachDirectionOfTraffic(5)
+	private Integer vehicleVolumeForOppositeDirection;
 	
 	// Latitude(6)
 	private Double latitude;
@@ -71,13 +82,6 @@ public class TrafficEntry {
 		this.totalPassingVehicleVolumes = totalPassingVehicleVolumes;
 	}
 
-	public String getVehicleVolumeByEachDirection() {
-		return vehicleVolumeByEachDirection;
-	}
-
-	public void setVehicleVolumeByEachDirection(String vehicleVolumeByEachDirection) {
-		this.vehicleVolumeByEachDirection = vehicleVolumeByEachDirection;
-	}
 
 	public Double getLatitude() {
 		return latitude;
@@ -94,7 +98,50 @@ public class TrafficEntry {
 	public void setLongitude(Double longitude) {
 		this.longitude = longitude;
 	}
-	
+
+	public String getIndexedStreet() {
+		return indexedStreet;
+	}
+
+	public void setIndexedStreet(String indexedStreet) {
+		this.indexedStreet = indexedStreet;
+	}
+
+	public Integer getVehicleVolumeForMainDirection() {
+		return vehicleVolumeForMainDirection;
+	}
+
+	public void setVehicleVolumeForMainDirection(Integer vehicleVolumeForMainDirection) {
+		this.vehicleVolumeForMainDirection = vehicleVolumeForMainDirection;
+	}
+
+	public Integer getVehicleVolumeForOppositeDirection() {
+		return vehicleVolumeForOppositeDirection;
+	}
+
+	public void setVehicleVolumeForOppositeDirection(Integer vehicleVolumeForOppositeDirection) {
+		this.vehicleVolumeForOppositeDirection = vehicleVolumeForOppositeDirection;
+	}
+
+	public Integer getWeekNumber() {
+		return weekNumber;
+	}
+
+	public void setWeekNumber(Integer weekNumber) {
+		this.weekNumber = weekNumber;
+	}
+
+	public Integer getDayInWeek() {
+		return dayInWeek;
+	}
+
+	public void setDayInWeek(Integer dayInWeek) {
+		this.dayInWeek = dayInWeek;
+	}
+
+
+
+
 	
 
 }

@@ -2,17 +2,32 @@ package fr.epita.traffic.launcher;
 
 import java.io.IOException;
 import java.text.ParseException;
+import java.util.LinkedHashMap;
 import java.util.List;
+import java.util.Map;
 import java.util.function.ToIntFunction;
 
 import fr.epita.traffic.datamodel.TrafficEntry;
 import fr.epita.traffic.services.TrafficEntryCSVDAO;
 
 public class Launcher {
+	
+	static Map<String, Integer> streetIndexMapping = new LinkedHashMap<>(); 
+	
 
 	public static void main(String[] args) throws IOException, ParseException {
 		TrafficEntryCSVDAO dao = new TrafficEntryCSVDAO();
+		
+		
 		List<TrafficEntry> list = dao.readAll();
+		
+		list.forEach(t -> {
+			if (!streetIndexMapping.containsKey(t.getStreet())){
+				streetIndexMapping.put(t.getStreet() , streetIndexMapping.size() + 1);
+			}
+		});
+		System.out.println("indexing result : ");
+		System.out.println(streetIndexMapping);
 		
 		System.out.println("list size : " +  list.size());
 		
@@ -22,11 +37,8 @@ public class Launcher {
 			
 		}
 		
-		int count2 = list
-				.stream()
-				.mapToInt(TrafficEntry::getTotalPassingVehicleVolumes)
-				.sum();
-		
+
+		int count2 = calculateSumOn(list, TrafficEntry::getTotalPassingVehicleVolumes);
 		double average = calculateAverageOn(list, TrafficEntry::getTotalPassingVehicleVolumes);
 		
 		
@@ -45,8 +57,11 @@ public class Launcher {
 		return average;
 	}
 	
-	private static int calculateSumOn(List<TrafficEntry> list, ToIntFunction<TrafficEntry> function) {
-		
+	private static <T> int calculateSumOn(List<T> list, ToIntFunction<T> function) {
+		return list				
+				.stream()
+				.mapToInt(function)
+				.sum();
 	}
 
 }
