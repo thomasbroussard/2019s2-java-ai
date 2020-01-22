@@ -3,7 +3,7 @@ package fr.epita.traffic.launcher;
 import java.io.IOException;
 import java.text.ParseException;
 import java.util.List;
-import java.util.stream.IntStream;
+import java.util.function.ToIntFunction;
 
 import fr.epita.traffic.datamodel.TrafficEntry;
 import fr.epita.traffic.services.TrafficEntryCSVDAO;
@@ -22,12 +22,31 @@ public class Launcher {
 			
 		}
 		
-		IntStream trafficMappedToTotalPassingVolume = list.stream().mapToInt(TrafficEntry::getTotalPassingVehicleVolumes);
+		int count2 = list
+				.stream()
+				.mapToInt(TrafficEntry::getTotalPassingVehicleVolumes)
+				.sum();
+		
+		double average = calculateAverageOn(list, TrafficEntry::getTotalPassingVehicleVolumes);
 		
 		
-		System.out.println("total passing vehicles : " + count);
-		System.out.println("total passing vehicles 2  : " + count2);
+		System.out.println("total passing vehicles : " + count2);
+		System.out.println("average passing vehicles : " + average);
+	
 			
+	}
+
+	private static <T> double calculateAverageOn(List<T> list, ToIntFunction<T> function) {
+		double average = list
+				.stream()
+				.mapToInt(function)
+				.average()
+				.getAsDouble();
+		return average;
+	}
+	
+	private static int calculateSumOn(List<TrafficEntry> list, ToIntFunction<TrafficEntry> function) {
+		
 	}
 
 }
